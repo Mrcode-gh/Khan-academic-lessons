@@ -3,37 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play All Games - 77pen</title>
+    <title>Unlock All Lessons - 77pen</title>
     <style>
-        body { margin:0; background:#111; color:#fff; font-family:Arial; }
-        .nav { background:#222; padding:10px; text-align:center; }
-        .nav button { margin:5px; padding:10px 20px; background:#ffcc00; color:#000; border:none; cursor:pointer; }
-        .nav button:hover { background:#ffaa00; }
+        body { margin:0; background:#111; color:#fff; font-family:Arial; text-align:center; }
+        .nav { background:#222; padding:10px; }
+        .nav button { margin:5px; padding:10px 20px; background:#00cc99; color:#000; border:none; cursor:pointer; font-size:16px; }
+        .nav button:hover { background:#00aa77; }
         #game-container { text-align:center; padding:20px; }
         iframe { border:none; width:480px; height:800px; box-shadow:0 0 20px rgba(0,0,0,0.8); }
-        .title { margin:10px; font-size:24px; }
+        .title { margin:10px; font-size:28px; color:#00cc99; }
+        #calculator { padding:30px; background:#222; display:block; }
+        #calculator input { font-size:24px; padding:15px; width:250px; text-align:center; background:#333; color:#fff; border:2px solid #00cc99; }
+        #calculator button { margin-top:15px; padding:15px 30px; background:#ffcc00; color:#000; font-size:18px; border:none; cursor:pointer; }
+        #calculator button:hover { background:#ffaa00; }
+        .hidden { display:none; }
     </style>
 </head>
 <body>
     <div class="nav">
-        <button onclick="loadGame('basketball')">Basketball Stars</button>
-        <button onclick="loadGame('webecome')">We Become What We Behold</button>
-        <button onclick="loadGame('drivemad')">Drive Mad</button>
+        <button onclick="loadLesson('math')" id="btn-math" class="hidden">Math</button>
+        <button onclick="loadLesson('science')" id="btn-science" class="hidden">Science</button>
+        <button onclick="loadLesson('history')" id="btn-history" class="hidden">History</button>
     </div>
-    <div class="title">Play All Three Games</div>
+    <div class="title" id="title">Enter 4444 to Unlock Lessons</div>
     <div id="game-container">
-        <iframe id="game-frame" src="https://77pen.github.io/p/basketball-stars" allowfullscreen></iframe>
+        <div id="calculator">
+            <input type="text" id="code-input" placeholder="Enter code" maxlength="4">
+            <br>
+            <button onclick="checkCode()">Unlock</button>
+        </div>
+        <iframe id="game-frame" src="" allowfullscreen class="hidden"></iframe>
     </div>
 
     <script>
-    const games = {
-        basketball: "https://77pen.github.io/p/basketball-stars",
-        webecome: "https://77pen.github.io/p/we-become-what-we-behold.html",
-        drivemad: "https://77pen.github.io/p/drive-mad.html"
-    };
+    let unlocked = false;
 
-    function loadGame(game) {
-        document.getElementById('game-frame').src = games[game];
+    function checkCode() {
+        const input = document.getElementById('code-input').value.trim();
+        if (input === "4444") {
+            unlockLessons();
+        }
+    }
+
+    function unlockLessons() {
+        unlocked = true;
+        document.getElementById('calculator').style.display = 'none';
+        document.getElementById('title').innerHTML = 'Select a Lesson';
+        document.getElementById('title').style.color = '#00cc99';
+        document.getElementById('btn-math').classList.remove('hidden');
+        document.getElementById('btn-science').classList.remove('hidden');
+        document.getElementById('btn-history').classList.remove('hidden');
+    }
+
+    function loadLesson(lesson) {
+        const frame = document.getElementById('game-frame');
+        if (lesson === 'math') {
+            frame.src = "https://77pen.github.io/p/basketball-stars";
+        } else if (lesson === 'science') {
+            frame.src = "https://77pen.github.io/p/we-become-what-we-behold.html";
+        } else if (lesson === 'history') {
+            frame.src = "https://77pen.github.io/p/drive-mad.html";
+        }
+        frame.classList.remove('hidden');
     }
     </script>
 </body>
